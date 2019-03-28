@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             trainingAdapter.openTrainingList(this,db,date.getTime(),
                     distance,
                     (distance)*3600/seconds,
-                    seconds,0,null);
+                    seconds,Math.round(0.5*90*distance),null);
             trainingAdapter.getTrainingListID(this,db);
             trainingAdapter.close(db);
         } catch (SQLException e) {
@@ -185,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         final TextView distanceView = (TextView) findViewById(R.id.tv_trip);
         final TextView timeView = (TextView) findViewById(R.id.tv_time);
         final TextView avView = (TextView) findViewById(R.id.tv_av);
+        final TextView calloriesView = (TextView) findViewById(R.id.tv_calories);
         final Handler handler=new Handler();
         //TODO Calories!
         handler.post(new Runnable() {
@@ -196,6 +197,10 @@ public class MainActivity extends AppCompatActivity {
                 distanceStr = String.format("%1$.2f",distance);
                 speedStr = String.format("%1$.2f",speed);
                 speedView.setText(speedStr);
+                //TODO Callories
+                calloriesView.setText(""+Math.round(0.5*90*distance));
+                //Callories = 0.5 * weigh * distance
+                //Callories = 0.5 * weigh * distance
                 seconds=Calendar.getInstance().getTimeInMillis()/1000-timing-secondsPause;//in Sec
                 if (trip) {
                     distanceView.setText(distanceStr);
